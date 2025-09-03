@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Available Cars</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Available Cars</h2>
+  <button onclick="loadCars()">Refresh List</button>
+  <ul id="carList"></ul>
+  <p id="message"></p>
+  <script>
+    async function loadCars() {
+      const list = document.getElementById('carList');
+      const message = document.getElementById('message');
+      list.innerHTML = '';
+      message.textContent = 'Loading...';
+      try {
+        const response = await fetch('/api/availableCars');
+        if (response.ok) {
+          const cars = await response.json();
+          if (cars.length === 0) {
+            message.textContent = 'No cars available.';
+            return;
+          }
+          message.textContent = '';
+          cars.forEach(car => {
+            const li = document.createElement('li');
+            li.textContent = `ID: ${car.id}, Model: ${car.model}`;
+            list.appendChild(li);
+          });
+        } else {
+          message.textContent = 'Failed to load cars.';
+        }
+      } catch {
+        message.textContent = 'Error connecting to server.';
+      }
+    }
+
+    loadCars();
+  </script>
+</body>
+</html>
