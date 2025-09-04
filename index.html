@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rento — Simple Car Rental</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header class="app-header">
+    <h1>Rento 🚗</h1>
+    <div class="right-tools">
+      <button id="darkModeToggle" class="ghost">🌓</button>
+      <span id="welcomeUser" class="muted"></span>
+      <button id="logoutBtn" class="ghost danger">Logout</button>
+    </div>
+  </header>
+
+  <main id="app">
+    <!-- Auth Section -->
+    <section id="authSection" class="card">
+      <h2>Welcome</h2>
+      <p class="muted">Please tell us if you are registered.</p>
+      <div class="auth-choices">
+        <button id="showLogin" class="primary">I am Registered</button>
+        <button id="showRegister" class="secondary">I am New (Register)</button>
+      </div>
+
+      <form id="loginForm" class="hidden small-form">
+        <h3>Login</h3>
+        <label>Email
+          <input type="email" id="loginEmail" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" id="loginPassword" placeholder="••••••••" required />
+        </label>
+        <button type="submit" class="primary">Login</button>
+      </form>
+
+      <form id="registerForm" class="hidden small-form">
+        <h3>Register</h3>
+        <label>Name
+          <input type="text" id="regName" placeholder="Your Name" required />
+        </label>
+        <label>Age
+          <input type="number" id="regAge" placeholder="18+" required min="18" />
+        </label>
+        <label>Sex
+          <select id="regSex" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>Driving Licence No.
+          <input type="text" id="regDL" placeholder="e.g., UP14 2020 1234567" required />
+        </label>
+        <label>Email
+          <input type="email" id="regEmail" placeholder="you@example.com" required />
+        </label>
+        <label>Password
+          <input type="password" id="regPassword" placeholder="Create a password" required minlength="6"/>
+        </label>
+        <button type="submit" class="primary">Create Account</button>
+      </form>
+    </section>
+
+    <!-- Profile details (editable after login) -->
+    <section id="profileSection" class="card hidden">
+      <h2>Your Details</h2>
+      <form id="profileForm" class="small-form">
+        <label>Name
+          <input type="text" id="name" required />
+        </label>
+        <label>Age
+          <input type="number" id="age" required min="18"/>
+        </label>
+        <label>Sex
+          <select id="sex" required>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+        <label>Driving Licence No.
+          <input type="text" id="dl" required />
+        </label>
+        <button type="submit" class="primary">Save Details</button>
+      </form>
+    </section>
+
+    <!-- Action Section -->
+    <section id="actionSection" class="card hidden">
+      <h2>What would you like to do?</h2>
+      <div class="action-choices">
+        <button id="rentBtn" class="primary">Rent a Car</button>
+        <button id="returnBtn" class="secondary">Return a Car</button>
+      </div>
+
+      <!-- Unique Feature: Fare Estimator + Smart Suggest -->
+      <div class="estimator">
+        <h3>💡 Fare Estimator & Smart Suggest</h3>
+        <div class="grid2">
+          <label>Days
+            <input type="number" id="estDays" min="1" value="1"/>
+          </label>
+          <label>People Traveling
+            <input type="number" id="estPeople" min="1" value="1"/>
+          </label>
+        </div>
+        <button id="runEstimator" class="ghost">Estimate</button>
+        <div id="estimatorResult" class="muted"></div>
+      </div>
+    </section>
+
+    <!-- Rent Section -->
+    <section id="rentSection" class="card hidden">
+      <div class="header-row">
+        <h2>Available Cars</h2>
+        <div class="grid3">
+          <label>Filter Type
+            <select id="filterType">
+              <option value="all">All</option>
+              <option value="Sedan">Sedan (₹2000/day)</option>
+              <option value="SUV">SUV (₹2500/day)</option>
+            </select>
+          </label>
+          <label>Days
+            <input type="number" id="rentDays" min="1" value="1"/>
+          </label>
+          <button id="backToAction" class="ghost">Back</button>
+        </div>
+      </div>
+      <div id="carList" class="cards"></div>
+    </section>
+
+    <!-- Return Section -->
+    <section id="returnSection" class="card hidden">
+      <div class="header-row">
+        <h2>Return a Car</h2>
+        <button id="backToAction2" class="ghost">Back</button>
+      </div>
+
+      <div id="activeBookings" class="cards"></div>
+
+      <form id="returnForm" class="small-form hidden">
+        <h3>Return Details</h3>
+        <div id="billPreview" class="muted"></div>
+        <label>Hours Late (if any)
+          <input type="number" id="lateHours" min="0" value="0"/>
+        </label>
+        <label>
+          <input type="checkbox" id="damaged"/> Car Damaged (₹1500 penalty)
+        </label>
+        <button type="button" id="showBill" class="secondary">Show Bill</button>
+        <div id="billOutput" class="bill"></div>
+        <button type="submit" class="primary">Confirm Return</button>
+      </form>
+    </section>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+  </main>
+
+  <footer class="app-footer">
+    <small>© <span id="year"></span> Rento — Demo App (LocalStorage)</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
